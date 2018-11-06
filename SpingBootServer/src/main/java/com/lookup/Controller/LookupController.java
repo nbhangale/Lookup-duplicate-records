@@ -52,7 +52,7 @@ public class LookupController {
 		        EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
 		 		        
 		        //find duplicates in employee list
-		        HashMap<Integer, List<Employee>> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
+		        List<Employee> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
 
 			    // set the status to success
 				status.setMessage(uri);
