@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-let listReducer = (state = {}, action) => {
+let listReducer = (state = {payload: []}, action) => {
     switch(action.type) {
         case 'DUBLICATE_LIST':
         return {
