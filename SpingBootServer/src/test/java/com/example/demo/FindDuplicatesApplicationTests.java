@@ -25,25 +25,107 @@ public class FindDuplicatesApplicationTests {
 		MockitoAnnotations.initMocks(this);
 	}
 	
+	/**
+	 * Description: Checks duplicate records with missing data in email id
+	 */
 	@Test
-	public void lookup()
+	public void lookupDuplicateEmail()
 	{
 		try {
 			EmployeeList employeeList = new EmployeeList();
-			Employee e1 = new Employee(null, null, null, null, null, null, null, null, null, null, null);
-			Employee e2 = new Employee(null, null, null, null, null, null, null, null, null, null, null);
+			Employee e1 = new Employee("Betsy", "Crehan", "Koch Group", "bcrehanh@skyrock.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+			Employee e2 = new Employee("Betsy", "Crehan", "Koch Group", "bcrhan@skyrock.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
 
-			employeeList.getEmployeeList().set(0, e1);
-			employeeList.getEmployeeList().set(1, e2);
-
-			Map<Integer, List<Employee>> result = distanceCalculator.findDifference(employeeList);
+			employeeList.getEmployeeList().add(e1);
+			employeeList.getEmployeeList().add(e2);
 			
-			Assert.assertEquals(result.containsKey(0), false);
+			Map<Integer, List<Employee>> result = DistanceCalculator.findDifference(employeeList);
+
+			// Checks if non-duplicate record has any entry or not and maps to true
+			Assert.assertEquals(result.get(0).isEmpty(), true);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Description: Checks non-duplicate records with missing data in email id
+	 */
+	@Test
+	public void lookupNonDuplicateEmail()
+	{
+		try {
+			EmployeeList employeeList = new EmployeeList();
+			Employee e1 = new Employee("Betsy", "Crehan", "Koch Group", "bcrehanh@skyrock.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+			Employee e2 = new Employee("Betsy", "Crehan", "Koch Group", "brhah@.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+
+			
+			employeeList.getEmployeeList().add(e1);
+			employeeList.getEmployeeList().add(e2);
+
+			Map<Integer, List<Employee>> result = DistanceCalculator.findDifference(employeeList);
+
+			// Checks if non-duplicate record has any entry or not and maps to false
+			Assert.assertEquals(result.get(0).isEmpty(), false);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Description: Checks duplicate records with missing data in address
+	 */
+	@Test
+	public void lookupDuplicateAddress1()
+	{
+		try {
+			EmployeeList employeeList = new EmployeeList();
+			Employee e1 = new Employee("Betsy", "Crehan", "Koch Group", "bcrehanh@skyrock.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+			Employee e2 = new Employee("Betsy", "Crehan", "Koch Group", "bcrhan@skyrock.com", "09311 Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+
+			employeeList.getEmployeeList().add(e1);
+			employeeList.getEmployeeList().add(e2);
+			
+			Map<Integer, List<Employee>> result = DistanceCalculator.findDifference(employeeList);
+
+			// Checks if non-duplicate record has any entry or not and maps to true
+			Assert.assertEquals(result.get(0).isEmpty(), true);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Description: Checks non-duplicate records with missing data in address
+	 */
+	@Test
+	public void lookupNonDuplicateAddress1()
+	{
+		try {
+			EmployeeList employeeList = new EmployeeList();
+			Employee e1 = new Employee("Betsy", "Crehan", "Koch Group", "bcrehanh@skyrock.com", "09311 Dawn Place", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+			Employee e2 = new Employee("Betsy", "Crehan", "Koch Group", "brhah@.com", "211 Darth Street", " ", "49544", "Grand Rapids", "Michigan", "MI", "616-150-4905");
+
+			
+			employeeList.getEmployeeList().add(e1);
+			employeeList.getEmployeeList().add(e2);
+
+			Map<Integer, List<Employee>> result = DistanceCalculator.findDifference(employeeList);
+
+			// Checks if non-duplicate record has any entry or not and maps to false
+			Assert.assertEquals(result.get(0).isEmpty(), false);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 }

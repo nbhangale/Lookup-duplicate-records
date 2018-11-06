@@ -16,9 +16,10 @@ import com.lookup.model.EmployeeList;
  */
 
 public class DistanceCalculator {
+
 	
 	/**
-	 * Description :  
+	 * Description : Calculate the differences between two records 
 	 * @param employeeList
 	 * @return
 	 * @throws Exception
@@ -26,6 +27,7 @@ public class DistanceCalculator {
 	@SuppressWarnings("deprecation")
 	public static HashMap<Integer, List<Employee>> findDifference(EmployeeList employeeList) throws Exception
 	{
+		
 		List<Employee> empList 							 = employeeList.getEmployeeList();
 		List<Employee> duplicateEmpList 				 = new ArrayList<Employee>();
 		List<Employee> nonDuplicateEmpList 				 = new ArrayList<Employee>();
@@ -67,6 +69,8 @@ public class DistanceCalculator {
 				
 				Employee emp2 = empIterator2.next();
 		    	
+				try
+				{
 	    		emailDistance 		= StringUtils.getLevenshteinDistance(emp.getEmail(), emp2.getEmail(), 2);
 	    		firstNameDistance 	= StringUtils.getLevenshteinDistance(emp.getFirstName(), emp2.getFirstName(), 5);
 	    		lastNameDistance 	= StringUtils.getLevenshteinDistance(emp.getLastName(), emp2.getLastName(), 5);
@@ -78,6 +82,11 @@ public class DistanceCalculator {
 	    		stateLongDistance 	= StringUtils.getLevenshteinDistance(emp.getState_long(), emp2.getState_long(), 10);
 	    		stateDistance 		= StringUtils.getLevenshteinDistance(emp.getState(), emp2.getState(), 2);
 	    		phoneDistance 		= StringUtils.getLevenshteinDistance(emp.getPhone(), emp2.getPhone(), 5);
+				}
+				catch(Exception e) 
+				{
+					System.out.println("employee data can not be null");
+				}
 	    		
 	    		if(emailDistance != -1 &&
 	    				firstNameDistance != -1 &&

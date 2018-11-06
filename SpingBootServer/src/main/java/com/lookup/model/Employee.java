@@ -1,21 +1,5 @@
 package com.lookup.model;
 
-/**
- * Class to store employee 
- * parameters: id	
- * 			   first_name	
- * 			   last_name
- *             company	
- *             email
- *             address1
- *             address2
- *             zip	
- *             city	
- *             state_long	
- *             state	
- *             phone
- */
-
 public class Employee {
 	
 	// excel sheet variables
@@ -33,6 +17,20 @@ public class Employee {
 	private String  phone;
     private static 	int employeeCount =0;
 	
+    /**
+     * 
+     * @param firstName
+     * @param lastName
+     * @param company
+     * @param email
+     * @param address1
+     * @param address2
+     * @param zip
+     * @param city
+     * @param state_long
+     * @param state
+     * @param phone
+     */
 	// contructor to create a single employee object
 	public Employee(String firstName, String lastName, String company, String email, String address1,
 			String address2, String zip, String city, String state_long, String state, String phone) {

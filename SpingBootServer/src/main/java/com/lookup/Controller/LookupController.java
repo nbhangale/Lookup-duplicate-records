@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.lookup.model.NonDuplicateStatus;
+import com.lookup.constants.CommonConstants;
 import com.lookup.model.Employee;
 import com.lookup.model.EmployeeList;
 import com.lookup.model.Status;
@@ -34,7 +36,7 @@ public class LookupController {
 	private LocalClient localClient;
 	
 	/**
-	 * Added to load a csv 
+	 * Added to load a csv & get duplicate and non-duplicate employee data
 	 * @param file
 	 * @return
 	 */
@@ -52,17 +54,15 @@ public class LookupController {
 				String uri = localClient.uploadFile(file);
 				
 				//Read employee data from the csv file, saved at local path
-				String file_path = ".//normal.csv";
-				// Read from CSV method
-		        EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
+				EmployeeList employeeList = employeeCSVdata(".//normal.csv");
 		 		        
 		        //find duplicates in employee list
-		        HashMap<Integer, List<Employee>> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
+		        HashMap<Integer, List<Employee>> separetedEmployeeList = DistanceCalculator.findDifference(employeeList);
 
 			    // set the status to success
 				status.setMessage(uri);
 				status.setStatusCode("Success");
-				status.setEmployeeList(duplicateEmployeeList);
+				status.setEmployeeList(separetedEmployeeList);
 				
 			} 
 			else 
@@ -83,6 +83,63 @@ public class LookupController {
 
 		log.info("loadCSV - End");
 		return status;
+	}
+	
+	/**
+	 * Description: Get duplicate eployee data
+	 * @param file
+	 * @return
+	 */
+	@RequestMapping(value = "/nonduplicate", method = RequestMethod.POST)
+	public NonDuplicateStatus getNonDuplicates(@RequestPart(value = "file") MultipartFile file) 
+	{
+		log.info("getNonDuplicates - Start");
+		NonDuplicateStatus nonDuplicateStatus = new NonDuplicateStatus();
+		try 
+		{
+			if (Utils.isValidExt(file)) 
+			{				
+				// stored csv to local
+				String uri = localClient.uploadFile(file);
+				
+				//Read employee data from the csv file, saved at local path
+				EmployeeList employeeList = employeeCSVdata(CommonConstants.FILE_PATH);
+				
+				  //find duplicates in employee list
+		        HashMap<Integer, List<Employee>> separetedEmployeeList = DistanceCalculator.findDifference(employeeList);
+		        
+			    // set the status to success
+		        nonDuplicateStatus.setMessage(uri);
+		        nonDuplicateStatus.setStatusCode(CommonConstants.StatusCodes.SUCCESS);
+		        System.out.println(separetedEmployeeList.get(0));
+		        nonDuplicateStatus.setEmployeeList(separetedEmployeeList.get(0));
+				
+			} 
+			else 
+			{
+				// set the status to invalid attachment
+				nonDuplicateStatus.setStatusCode(CommonConstants.StatusCodes.INVALID);
+				nonDuplicateStatus.setMessage(CommonConstants.INVALID_ATTACHMENT);;
+			}
+		}
+		catch (Exception e) 
+		{
+			// set the status to invalid attachment with message
+			nonDuplicateStatus.setStatusCode(CommonConstants.StatusCodes.EXCEPTION);
+			nonDuplicateStatus.setMessage(e.getMessage());
+			log.error(e.getMessage());
+		}
+
+		log.info("getDuplicates - End");
+		return nonDuplicateStatus;
+	}
+	
+	public EmployeeList employeeCSVdata(String file_path)
+	{
+		// Read from CSV method
+	    EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
+	    return employeeList;
+	
 	}
 
 }
