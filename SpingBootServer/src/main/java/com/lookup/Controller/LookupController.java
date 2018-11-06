@@ -1,5 +1,8 @@
 package com.lookup.Controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,11 +52,12 @@ public class LookupController {
 		        EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
 		 		        
 		        //find duplicates in employee list
-		        DistanceCalculator.findDifference(employeeList);
+		        HashMap<Integer, List<Employee>> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
 
 			    // set the status to success
 				status.setMessage(uri);
 				status.setStatusCode("Success");
+				status.setEmployeeList(duplicateEmployeeList);
 				
 			} 
 			else 
