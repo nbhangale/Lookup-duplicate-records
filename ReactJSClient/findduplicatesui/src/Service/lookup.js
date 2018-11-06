@@ -3,7 +3,7 @@ module.exports.getDuplicateData = (data) => {
     formData.append('file', data);
 
     // Fetch from web api
-    return fetch('http://localhost:8081/nonduplicate', {
+    return fetch('https://blooming-eyrie-63560.herokuapp.com/nonduplicate', {
       method: 'POST',
       body: formData
     }).then(res => {
