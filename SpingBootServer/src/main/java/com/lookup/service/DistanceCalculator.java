@@ -17,15 +17,22 @@ import com.lookup.model.EmployeeList;
 
 public class DistanceCalculator {
 	
+	/**
+	 * Description :  
+	 * @param employeeList
+	 * @return
+	 * @throws Exception
+	 */
 	@SuppressWarnings("deprecation")
-	public static List<Employee> findDifference(EmployeeList employeeList) throws Exception
+	public static HashMap<Integer, List<Employee>> findDifference(EmployeeList employeeList) throws Exception
 	{
-		List<Employee> empList 				= employeeList.getEmployeeList();
-		List<Employee> duplicateEmpList 	= new ArrayList<Employee>();
-		List<Employee> nonDuplicateEmpList 	= new ArrayList<Employee>();
-		//HashMap<Integer, List<Employee>> duplicateEmpMap = new HashMap<Integer, List<Employee>>();
-		Integer counterKey 					= 0;
-		Iterator<Employee> empIterator 		= empList.iterator();
+		List<Employee> empList 							 = employeeList.getEmployeeList();
+		List<Employee> duplicateEmpList 				 = new ArrayList<Employee>();
+		List<Employee> nonDuplicateEmpList 				 = new ArrayList<Employee>();
+		Integer counterKey 					    		 = 0;
+		Iterator<Employee> empIterator 		         	 = empList.iterator();
+		List<Employee> tempDuplicateList 				 = new ArrayList<Employee>(); 
+		HashMap<Integer, List<Employee>> duplicateEmpMap = new HashMap<Integer, List<Employee>>();
 		
 		while(empIterator.hasNext())
 		{
@@ -86,21 +93,27 @@ public class DistanceCalculator {
 	    		{
 	    			duplicateEmpList.add(emp);
 	    			duplicateEmpList.add(emp2);
+	    			tempDuplicateList.add(emp2);
 	    		}
 		    }
 		    
-		   /* if(!(duplicateEmpList.isEmpty()))
+		    if(!(duplicateEmpList.isEmpty()))
+		    {		    	
+		    	duplicateEmpMap.put(++counterKey, new ArrayList<Employee>(duplicateEmpList));
+		    	duplicateEmpList.clear();
+		    } 
+		    else
 		    {
-		    	duplicateEmpMap.put(++counterKey, duplicateEmpList);
-		    	//duplicateEmpList.clear();
-		    } */
+		    	//Check if this record was not marked as deleted
+		    	if(!tempDuplicateList.contains(emp))
+		    		nonDuplicateEmpList.add(emp);
+		    }
 		    
-			
-		    
-		    //empList.remove(emp);
+		    empIterator.remove();
 		}
+		duplicateEmpMap.put(0, new ArrayList<Employee>(nonDuplicateEmpList));
 		
-		return duplicateEmpList;
+		return duplicateEmpMap;
 		  
 	}
 

@@ -13,6 +13,11 @@ import com.opencsv.CSVReader;
 
 public class ReadFromCSV {
 	
+	/**
+	 * Description : 
+	 * @param file
+	 * @return
+	 */
 	public static EmployeeList loadCSVData(String file)
     {
         EmployeeList employeeList = new EmployeeList();

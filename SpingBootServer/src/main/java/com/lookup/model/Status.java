@@ -16,7 +16,7 @@ public class Status {
 	
 	private String message;
 	
-	private List<Employee> employeeList;
+	private HashMap<Integer, List<Employee>> employeeList;
 
 	// getters and setters
 	public String getStatusCode() {
@@ -35,11 +35,11 @@ public class Status {
 		this.message = message;
 	}
 
-	public List<Employee> getEmployeeList() {
+	public HashMap<Integer, List<Employee>> getEmployeeList() {
 		return employeeList;
 	}
 
-	public void setEmployeeList(List<Employee> duplicateEmployeeList) {
+	public void setEmployeeList(HashMap<Integer, List<Employee>> duplicateEmployeeList) {
 		this.employeeList = duplicateEmployeeList;
 	}
 

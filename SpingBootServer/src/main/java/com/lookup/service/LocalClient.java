@@ -18,6 +18,12 @@ public class LocalClient {
 	// variable to store file to local path
 	private String localPath = ".//";
 	
+	/**
+	 * Description : 
+	 * @param multipartFile
+	 * @return
+	 * @throws Exception
+	 */
 	public String uploadFile(MultipartFile multipartFile) throws Exception {
 		
 		byte[] bytes = multipartFile.getBytes();

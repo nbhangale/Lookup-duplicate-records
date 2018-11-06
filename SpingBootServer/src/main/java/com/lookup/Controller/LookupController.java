@@ -1,10 +1,11 @@
-package com.lookup.Controller;
+package com.lookup.controller;
 
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -25,7 +26,9 @@ import com.lookup.util.Utils;
  */
 
 @RestController
-public class LookupController {	
+public class LookupController {
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private LocalClient localClient;
@@ -39,6 +42,7 @@ public class LookupController {
 	@RequestMapping(value = "/lookup", method = RequestMethod.POST)
 	public Status loadCSV(@RequestPart(value = "file") MultipartFile file) 
 	{
+		log.info("loadCSV - Start");
 		Status status = new Status();
 		try 
 		{
@@ -53,7 +57,7 @@ public class LookupController {
 		        EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
 		 		        
 		        //find duplicates in employee list
-		        List<Employee> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
+		        HashMap<Integer, List<Employee>> duplicateEmployeeList = DistanceCalculator.findDifference(employeeList);
 
 			    // set the status to success
 				status.setMessage(uri);
@@ -72,10 +76,12 @@ public class LookupController {
 		catch (Exception e) 
 		{
 			// set the status to invalid attachment with message
-			status.setStatusCode("INVALID_ATTACHMENT exception");
-			status.setMessage("INVALID_ATTACHMENT" + e.getMessage());
+			status.setStatusCode("Exception");
+			status.setMessage(e.getMessage());
+			log.error(e.getMessage());
 		}
 
+		log.info("loadCSV - End");
 		return status;
 	}
 
