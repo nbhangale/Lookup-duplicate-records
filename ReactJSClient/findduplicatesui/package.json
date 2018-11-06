@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
+    "classnames": "latest",
+    "prop-types": "latest",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.1.1",    
-    "prop-types": "latest",
-    "classnames": "latest",
-    "@material-ui/icons": "latest",
-    "@material-ui/core": "latest"
+    "react-redux": "^5.1.0",
+    "react-scripts": "2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
