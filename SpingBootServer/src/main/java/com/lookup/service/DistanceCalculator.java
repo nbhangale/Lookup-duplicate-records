@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.lookup.model.Employee;
 import com.lookup.model.EmployeeList;
-import com.sun.org.apache.xpath.internal.operations.And;
 
 /**
  * Look up service class
