@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lookup.model.Employee;
 import com.lookup.model.EmployeeList;
 import com.lookup.model.Status;
+import com.lookup.service.DistanceCalculator;
 import com.lookup.service.LocalClient;
 import com.lookup.util.ReadFromCSV;
 import com.lookup.util.Utils;
@@ -46,11 +47,9 @@ public class LookupController {
 				String file_path = ".//normal.csv";
 				// Read from CSV method
 		        EmployeeList employeeList = ReadFromCSV.loadCSVData(file_path);
-		        
-		        for(Employee em: employeeList.getEmployeeList())
-		        {
-		        	System.out.println(em.getEmail());
-		        }
+		 		        
+		        //find duplicates in employee list
+		        DistanceCalculator.findDifference(employeeList);
 
 			    // set the status to success
 				status.setMessage(uri);

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Look up service class
+ * Local Client store service class
  * Functions: class to store the csv file to local path
  */
 
