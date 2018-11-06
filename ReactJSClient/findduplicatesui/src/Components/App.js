@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
-//import ReactDOM from 'react-dom';
-//import logo from './logo.svg';
-//import Button from '@material-ui/core/Button';
+import {connect} from 'react-redux';
+
 import '../Assets/css/App.css';
 import Util from '../Service/util';
-//import DuplicateList from './DuplicateList';
 
 class App extends Component {
 
   handleFileChange = (event) => {
     console.log(event.target.files);
-    Util.getDuplicateData(event.target.files[0]).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    })
+    // Util.getDuplicateData(event.target.files[0]).then(res => {
+    //   console.log(res);
+    // }).catch(err => {
+    //   console.log(err);
+    // })
+
+    this.props.onFileChange(event.target.files[0]);
   }
 
   handleClick() {
@@ -44,4 +44,17 @@ class App extends Component {
   }
 }
 
-export default App;
+let mapDispatchToProps = (dispatch) => {
+  return {
+    onFileChange : (file) => {
+      Util.getDuplicateData(file).then(res => {
+        console.log(res);
+        dispatch(res);
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+  } 
+}
+
+export default connect(null, mapDispatchToProps)(App);
