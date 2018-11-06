@@ -9,6 +9,7 @@ Server: Spring boot
 Client: React with redux
 
 Below are the steps to start the application on tomcat server:
+
 Easily acecessible at 'https://blooming-eyrie-63560.herokuapp.com/lookup' and 'https://blooming-eyrie-63560.herokuapp.com/nonduplicate'
 
 1. Download the project folder (copy the same to local file)
